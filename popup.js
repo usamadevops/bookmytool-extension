@@ -1,36 +1,88 @@
-document.addEventListener('DOMContentLoaded', function() {
-    if(chrome?.tabs?.query) {
+
+document.addEventListener('DOMContentLoaded', async function() {
+    if(chrome.tabs) {
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            chrome.tabs.sendMessage(tabs[0].id, {text: 'get_page_details'}, function(response) {
-                if (response) {
-                    document.getElementById('toolName').value = response.title;
-                    document.getElementById('toolLink').value = response.url;
-                    document.getElementById('toolDescription').value = response.description;
-                }
-            });
+            if(tabs.length > 0) {
+                chrome.tabs.sendMessage(tabs[0].id, {text: 'get_page_details'}, function(response) {
+                    if (response) {
+                        document.getElementById('toolName').value = response.title;
+                        document.getElementById('toolLink').value = response.url;
+                        document.getElementById('toolDescription').value = response.description;
+                    }
+                });
+            }
         });
     }
-  
-    document.getElementById('toolForm').addEventListener('submit', function(event) {
+
+    await loadCategories();
+    await loadTools();
+   
+    document.getElementById('toolForm').addEventListener('submit', async function(event) {
         event.preventDefault();
         const toolName = document.getElementById('toolName').value;
         const toolLink = document.getElementById('toolLink').value;
         const toolDescription = document.getElementById('toolDescription').value;
-  
-        chrome.storage.sync.set({[toolName]: {link: toolLink, description: toolDescription}}, function() {
-            console.log('Tool saved:', toolName);
-            loadTools();
+        let category = document.getElementById('categorySelect').value;
+        
+        if (!category) {
+            category = document.getElementById('newCategory').value;
+            if (category) {
+                await addCategory(category);
+                document.getElementById('newCategory').value = ''; // Clear the new category field
+            }
+        }
+
+        const toolData = { link: toolLink, description: toolDescription, category: category };
+        
+        await chrome.storage.sync.set({[toolName]: toolData});
+        console.log('Tool saved:', toolName);
+        await loadTools();
+    });
+});
+
+async function loadCategories() {
+    return new Promise((resolve, reject) => {
+        chrome?.storage?.sync.get('categories', function(data) {
+            const categories = data.categories || ['General'];
+            const select = document.getElementById('categorySelect');
+            select.innerHTML = categories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
+            resolve();
         });
     });
-  
-    loadTools();
-});
-  
-function loadTools() {
-    chrome?.storage?.sync.get(null, function(items) {
-        var allTools = Object.keys(items).map(function(key) {
-            return `<div><strong>${key}</strong>: <a href="${items[key].link}" target="_blank">${items[key].link}</a><p>${items[key].description}</p></div>`;
+}
+
+async function addCategory(category) {
+    return new Promise((resolve, reject) => {
+        chrome.storage.sync.get('categories', function(data) {
+            const categories = data.categories || [];
+            if (!categories.includes(category)) {
+                categories.push(category);
+                chrome.storage.sync.set({'categories': categories}, function() {
+                    resolve(loadCategories());
+                });
+            } else {
+                resolve();
+            }
         });
-        document.getElementById('toolList').innerHTML = allTools.join('');
+    });
+}
+
+async function loadTools() {
+    return new Promise((resolve, reject) => {
+        chrome.storage.sync.get(null, function(items) {
+            const categoryMap = {};
+            Object.keys(items).forEach(function(key) {
+                if (key !== 'categories') {
+                    const item = items[key];
+                    if (!categoryMap[item.category]) {
+                        categoryMap[item.category] = [];
+                    }
+                    categoryMap[item.category].push(`<div><strong>${key}</strong>: <a href="${item.link}" target="_blank">${item.link}</a><p>${item.description}</p></div>`);
+                }
+            });
+            const categoryList = document.getElementById('categoryList');
+            categoryList.innerHTML = Object.keys(categoryMap).map(cat => `<h2>${cat}</h2>${categoryMap[cat].join('')}`).join('');
+            resolve();
+        });
     });
 }
