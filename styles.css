@@ -1,19 +1,166 @@
 body {
-    font-family: Arial, sans-serif;
-    min-width: 500px;
-}
-input[type="text"], input[type="url"], textarea {
+    font-family: Inter, sans-serif;
     width: 100%;
-    margin-bottom: 10px;
-    padding: 8px;
+    margin: 0;
+    box-sizing: border-box;
+
 }
-button {
-    padding: 10px 15px;
-    background-color: #4CAF50;
-    color: white;
+
+.container {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    box-sizing: border-box;
+    gap: 8px;
+    border-radius: 10px;
+    background: var(--sky-500, #0EA5E9);
+    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.09);
+}
+
+.internal_container {
+    display: flex;
+    margin: 0px;
+    padding: 24px;
+
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: auto;
+    border-radius: 16px;
+    background: var(--sky-100, #E0F2FE);
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    padding: 8px 0;
+    width: 100%;
+}
+
+.__left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.___right {
+    display: flex;
+}
+
+/* For tabs */
+
+.tab {
+    display: flex;
+    padding: 5px;
+    align-items: flex-start;
+    border-radius: 6px;
+    background: var(--slate-100, #F1F5F9);
+}
+
+.tab button {
+    display: flex;
+    padding: 6px 12px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 3px;
     border: none;
+    background-color: transparent;
+    color: var(--slate-900, #0F172A);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+.tab button:active,
+.tab button:hover {
+    box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.05);
     cursor: pointer;
 }
-button:hover {
-    background-color: #45a049;
+
+.tab button.active {
+    background-color: #fff;
+}
+
+
+
+/* tabs end */
+
+#toolForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 4px;
+}
+
+#toolform div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: auto;
+    gap: 6px;
+}
+
+input[type="text"],
+input[type="url"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    border: 1px solid var(--slate-300, #CBD5E1);
+    background: #FFF;
+}
+
+
+.options {
+    border: 1px solid var(--slate-300, #CBD5E1);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+select {
+    display: flex;
+    width: 100%;
+    padding: 8px 12px;
+    align-items: center;
+    border-radius: 6px;
+
+    gap: 10px;
+    border: none;
+    background: #FFF;
+    border-right: 8px solid transparent;
+}
+
+label {
+    color: var(--slate-500, #64748B);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+#toolDescription {
+    display: none;
+}
+
+#toolForm button {
+    padding: 8px 16px;
+    margin-top: 16px;
+    border-radius: 6px;
+    background: var(--slate-900, #0F172A);
+    color: white;
+    gap: 16spx;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+
+}
+
+#toolForm button:hover {
+    background: var(--slate-900, #070b14);
+    box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.15);
 }
