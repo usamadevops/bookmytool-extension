@@ -9,13 +9,10 @@ function openTab(evt, tabName) {
 }
 
 document.addEventListener('DOMContentLoaded', async function () {
-    
-    //    Get active Tab
     var firstTablink = document.getElementsByClassName("tablinks")[0];
-    var clickEvent = new Event('click');
-    firstTablink.dispatchEvent(clickEvent);
-    // All Close
-
+    if (firstTablink) {
+        firstTablink.click();
+    }
     if (chrome.tabs) {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             if (tabs.length > 0) {
@@ -30,6 +27,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     }
 
+    await loadDefaultCategories();
     await loadCategories();
     await loadTools();
 
@@ -51,10 +49,21 @@ document.addEventListener('DOMContentLoaded', async function () {
         const toolData = { link: toolLink, description: toolDescription, category: category };
 
         await chrome.storage.sync.set({ [toolName]: toolData });
-        console.log('Tool saved:', toolName);
         await loadTools();
     });
 });
+
+async function loadDefaultCategories() {
+    const defaultCategories = ["General", "Programming", "Design", "Marketing", "Finance", "Education", "Health", "Entertainment", "News", "Travel", "Sports", "Food", "Shopping", "Social Media", "Productivity", "Others"];
+    return new Promise((resolve, reject) => {
+        chrome?.storage?.sync?.get('categories', function (data) {
+            const categories = data.categories || defaultCategories;
+            chrome?.storage?.sync?.set({ 'categories': categories }, function () {
+                resolve();
+            });
+        });
+    });
+}
 
 async function loadCategories() {
     return new Promise((resolve, reject) => {
@@ -93,11 +102,12 @@ async function loadTools() {
                     if (!categoryMap[item.category]) {
                         categoryMap[item.category] = [];
                     }
-                    categoryMap[item.category].push(`<div><strong>${key}</strong>: <a href="${item.link}" target="_blank">${item.link}</a><p>${item.description}</p></div>`);
+                    // categoryMap[item.category].push(`<div><strong>${key}</strong>: <a href="${item.link}" target="_blank">${item.link}</a><p>${item.description}</p></div>`);
+                    categoryMap[item.category].push(`<div class="tool-pill"><a href="${item.link}" target="_blank">${key}</a></div>`);
                 }
             });
             const categoryList = document.getElementById('categoryList');
-            categoryList.innerHTML = Object.keys(categoryMap).map(cat => `<h2>${cat}</h2>${categoryMap[cat].join('')}`).join('');
+            categoryList.innerHTML = Object.keys(categoryMap).map(cat => `<h2 class="category-heading">${cat}</h2>${categoryMap[cat].join('')}`).join('');
             resolve();
         });
     });

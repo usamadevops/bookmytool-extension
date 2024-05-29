@@ -1,6 +1,6 @@
 body {
     font-family: Inter, sans-serif;
-    width: 100%;
+    width: 600px;
     margin: 0;
     box-sizing: border-box;
 
@@ -163,4 +163,25 @@ label {
 #toolForm button:hover {
     background: var(--slate-900, #070b14);
     box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.15);
+}
+
+.category-heading {
+    color: #000;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 14px;
+    /* 100% */
+}
+
+
+.tool-pill {
+    display: flex;
+    padding: 4px 8px;
+    align-items:center;
+    gap: 8px;
+    text-decoration: none;
+    border-radius: 28px;
+    border: 1px solid var(--sky-200, #BAE6FD);
+    background: var(--sky-100, #E0F2FE);
 }
