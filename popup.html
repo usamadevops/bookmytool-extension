@@ -58,30 +58,33 @@
                 </div>
             </div>
             <div class="tab">
-                <button class="tablinks" id="newBookmarkBtn">New Bookmark</button>
-                <button class="tablinks" id="savedToolsBtn">Saved Tools</button>
+                <button class="tablinks" onclick="openTab(event, 'form')" id="newBookmarkBtn">New
+                    Bookmark</button>
+                <button class="tablinks" onclick="openTab(event, 'categoryList')" id="savedToolsBtn">Saved
+                    Tools</button>
             </div>
-            <form id="toolForm">
-                <label>Select Category</label>
-                <div class="options">
-                    <select id="categorySelect">
-                        <option value="">Select a category</option>
-                    </select>
-                    <!-- <input type="text" id="newCategory" placeholder="Or add a new category"> -->
-                </div>
-                <div>
-                    <label>Name</label>
-                    <input type="text" id="toolName" placeholder="Name" required>
-                </div>
-                <div>
-
-                    <label>Link</label>
-                    <input type="url" id="toolLink" placeholder="Link" required>
-                </div>
-                <textarea id="toolDescription" placeholder="Description"></textarea>
-                <button type="submit">Save Tool</button>
-            </form>
-            <div id="categoryList"></div>
+            <div id="form" class="tabContent">
+                <form id="toolForm">
+                    <label>Select Category</label>
+                    <div class="options">
+                        <select id="categorySelect">
+                            <option value="">Select a category</option>
+                        </select>
+                        <!-- <input type="text" id="newCategory" placeholder="Or add a new category"> -->
+                    </div>
+                    <div>
+                        <label>Name</label>
+                        <input type="text" id="toolName" placeholder="Name" required>
+                    </div>
+                    <div>
+                        <label>Link</label>
+                        <input type="url" id="toolLink" placeholder="Link" required>
+                    </div>
+                    <textarea id="toolDescription" placeholder="Description"></textarea>
+                    <button type="submit">Save Tool</button>
+                </form>
+            </div>
+            <div id="categoryList" class="tabContent"></div>
         </div>
     </section>
     <script src="popup.js"></script>
