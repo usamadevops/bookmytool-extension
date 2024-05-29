@@ -19,12 +19,22 @@ function openTab(evt, tabName) {
 }
 
 
-document.addEventListener('DOMContentLoaded',  function () {
-    document.getElementById("newBookmarkBtn").click();
-})
-
 document.addEventListener('DOMContentLoaded', async function () {
-    if (chrome.tabs) {
+
+
+    // Event listeners for tab buttons
+    document.getElementById('newBookmarkBtn').addEventListener('click', function(event) {
+        openTab(event, 'form');
+    });
+    document.getElementById('savedToolsBtn').addEventListener('click', function(event) {
+        openTab(event, 'categoryList');
+    });
+
+    // Setting default tab on page load
+    document.getElementById('newBookmarkBtn').click();
+
+
+    if (chrome && chrome.tabs) {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             if (tabs.length > 0) {
                 chrome.tabs.sendMessage(tabs[0].id, { text: 'get_page_details' }, function (response) {
@@ -107,18 +117,25 @@ async function loadTools() {
     return new Promise((resolve, reject) => {
         chrome.storage.sync.get(null, function (items) {
             const categoryMap = {};
+            // Iterate over each item in the storage
             Object.keys(items).forEach(function (key) {
-                if (key !== 'categories') {
+                if (key !== 'categories') { // Ensure we're only dealing with tool items
                     const item = items[key];
                     if (!categoryMap[item.category]) {
-                        categoryMap[item.category] = [];
+                        categoryMap[item.category] = []; // Create an array for new categories
                     }
-                    // categoryMap[item.category].push(`<div><strong>${key}</strong>: <a href="${item.link}" target="_blank">${item.link}</a><p>${item.description}</p></div>`);
+                    // Add a tool pill for each tool in the category
                     categoryMap[item.category].push(`<div class="tool-pill"><a href="${item.link}" target="_blank">${key}</a></div>`);
                 }
             });
+
             const categoryList = document.getElementById('categoryList');
-            categoryList.innerHTML = Object.keys(categoryMap).map(cat => `<h2 class="category-heading">${cat}</h2>${categoryMap[cat].join('')}`).join('');
+            // Map each category to its header and corresponding pills
+            categoryList.innerHTML = Object.keys(categoryMap).map(cat => `
+                <h2 class="category-heading">${cat}</h2>
+                <div class="pills">${categoryMap[cat].join('')}</div>
+            `).join('');
+
             resolve();
         });
     });

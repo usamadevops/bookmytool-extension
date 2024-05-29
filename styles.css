@@ -1,6 +1,7 @@
 body {
     font-family: Inter, sans-serif;
     width: 600px;
+    height: 600px;
     margin: 0;
     box-sizing: border-box;
 
@@ -80,24 +81,32 @@ body {
 .tab button.active {
     background-color: #fff;
 }
+
 /* Go from zero to full opacity */
 @keyframes fadeEffect {
-    from {opacity: 0;}
-    to {opacity: 1;}
-  }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
 
 .tabContent {
     display: none;
+    animation: fadeEffect 1s;
     width: 100%;
-    animation: fadeEffect 1s; /* Fading effect takes 1 second */
+    background-color: white;
+    padding: 16px;
+    border-radius: 10px;
 }
 
-/* tabs end */
+
 
 #toolForm {
     display: flex;
     flex-direction: column;
-    width: 100%;
     gap: 4px;
 }
 
@@ -180,14 +189,35 @@ label {
     /* 100% */
 }
 
+#categoryList {
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    flex-direction: row;
+}
 
 .tool-pill {
     display: flex;
     padding: 4px 8px;
-    align-items:center;
+    width: auto;
+    align-items: center;
     gap: 8px;
-    text-decoration: none;
     border-radius: 28px;
     border: 1px solid var(--sky-200, #BAE6FD);
-    background: var(--sky-100, #E0F2FE);
+    background: var(--sky-100, #dcecf8);
+}
+
+.pills {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 16px 0;
+    gap: 8px;
+}
+
+.tool-pill a {
+    text-decoration: none;
+
 }
