@@ -1,7 +1,6 @@
 body {
     font-family: Inter, sans-serif;
     width: 600px;
-    height: 600px;
     margin: 0;
     box-sizing: border-box;
 
@@ -96,7 +95,7 @@ body {
 .tabContent {
     display: none;
     animation: fadeEffect 1s;
-    width: 100%;
+    width: calc(100% - 32px);
     background-color: white;
     padding: 16px;
     border-radius: 10px;
