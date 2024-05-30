@@ -1,19 +1,28 @@
 function openTab(evt, tabName) {
-  let tabcontent = document.getElementsByClassName("tabContent");
-  for (let i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
+ // Declare all variables
+ var i, tabcontent, tablinks;
 
-  let tablinks = document.getElementsByClassName("tablinks");
-  for (let i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
+ tabcontent = document.getElementsByClassName("tabContent");
+ for (i = 0; i < tabcontent.length; i++) {
+   tabcontent[i].style.display = "none";
+ }
 
-  document.getElementById(tabName).style.display = "block";
-  evt.currentTarget.className += " active";
+ // Get all elements with class="tablinks" and remove the class "active"
+ tablinks = document.getElementsByClassName("tablinks");
+ for (i = 0; i < tablinks.length; i++) {
+   tablinks[i].className = tablinks[i].className.replace(" active", "");
+ }
+
+ // Show the current tab, and add an "active" class to the button that opened the tab
+ document.getElementById(tabName).style.display = "block";
+ evt.currentTarget.className += " active";
 }
 
+
 document.addEventListener('DOMContentLoaded', async function () {
+
+
+    // Event listeners for tab buttons
     document.getElementById('newBookmarkBtn').addEventListener('click', function(event) {
         openTab(event, 'form');
     });
@@ -21,7 +30,23 @@ document.addEventListener('DOMContentLoaded', async function () {
         openTab(event, 'categoryList');
     });
 
+    // Setting default tab on page load
     document.getElementById('newBookmarkBtn').click();
+
+
+    if (chrome && chrome.tabs) {
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            if (tabs.length > 0) {
+                chrome.tabs.sendMessage(tabs[0].id, { text: 'get_page_details' }, function (response) {
+                    if (response) {
+                        document.getElementById('toolName').value = response.title;
+                        document.getElementById('toolLink').value = response.url;
+                        document.getElementById('toolDescription').value = response.description;
+                    }
+                });
+            }
+        });
+    }
 
     await loadDefaultCategories();
     await loadCategories();
@@ -41,25 +66,21 @@ document.addEventListener('DOMContentLoaded', async function () {
                 document.getElementById('newCategory').value = '';
             }
         }
-       
         const toolData = { link: toolLink, description: toolDescription, category: category };
-
         await chrome.storage.sync.set({ [toolName]: toolData });
         alert('New Tool Saved Successfully');
-        
         document.getElementById('toolName').value = '';
         document.getElementById('toolLink').value = '';
         document.getElementById('toolDescription').value = '';
         document.getElementById('categorySelect').value = '';
         document.getElementById('savedToolsBtn').click();
-
         await loadTools();
     });
 });
 
 async function loadDefaultCategories() {
     const defaultCategories = ["General", "Programming", "Design", "Marketing", "Finance", "Education", "Health", "Entertainment", "News", "Travel", "Sports", "Food", "Shopping", "Social Media", "Productivity", "Others"];
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         chrome?.storage?.sync?.get('categories', function (data) {
             const categories = data.categories || defaultCategories;
             chrome?.storage?.sync?.set({ 'categories': categories }, function () {
