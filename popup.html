@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
-
 <body>
     <section class="container">
         <div class="internal_container">
@@ -50,18 +48,26 @@
                         </defs>
                     </svg>
                 </div>
-                <div class="___right">
+                <div class="___right" id="cross_button">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M3.3335 12.6666L12.6668 3.33325M3.3335 3.33325L12.6668 12.6666" stroke="#64748B"
                             stroke-width="1.5" stroke-linecap="round" />
                     </svg>
                 </div>
             </div>
+           <div class="middle">
             <div class="tab">
                 <button class="tablinks"  id="newBookmarkBtn">New
                     Bookmark</button>
                 <button class="tablinks"  id="savedToolsBtn">Saved
                     Tools</button>
+            </div>
+            <div class="export" id="exported">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 9.33325V13.3333C2 14.0697 2.59695 14.6666 3.33333 14.6666H12.6667C13.4031 14.6666 14 14.0697 14 13.3333V9.33325" stroke="#64748B" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8.00033 2L11.3337 5.62963M8.00033 11.3333V2V11.3333ZM8.00033 2L4.66699 5.62964L8.00033 2Z" stroke="#64748B" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
             </div>
             <div id="form" class="tabContent">
                 <form id="toolForm">

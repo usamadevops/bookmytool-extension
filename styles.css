@@ -101,7 +101,20 @@ body {
     border-radius: 10px;
 }
 
-
+.middle{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between ;
+    align-items: center;
+}
+.remove-tool{
+    margin-right: 4px;
+    outline: none;
+}
+#exported{
+    display: none;
+}
 
 #toolForm {
     display: flex;
@@ -191,7 +204,8 @@ label {
 #categoryList {
     display: flex;
     flex-wrap: wrap;
-    overflow-y: scroll;
+    overflow-y: auto;
+    max-height: 400px;
     flex-direction: row;
 }
 
