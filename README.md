@@ -13,7 +13,7 @@ Bookmark Master is a Chrome extension designed to streamline and enhance the boo
 Google Chrome Browser
 ## Developer Mode Installation
 - **Download the Extension**: Clone the ZIP file from the provided link and extract it to a preferred location.
-- **Open Chrome Extensionsv: Type chrome://extensions/ in your Chrome browser's address bar.
+- **Open Chrome Extensionsv**: Type chrome://extensions/ in your Chrome browser's address bar.
 - **Enable Developer Mode**: Toggle the 'Developer mode' at the top right of the extensions page.
 - **Load Unpacked Extension**: Click 'Load unpacked' and select the extracted folder of the extension to install it.
 - **Enable the Extension**: Ensure the extension is enabled in your browser’s extension settings.
