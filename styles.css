@@ -214,6 +214,7 @@ label {
     padding: 4px 8px;
     width: auto;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     border-radius: 28px;
     border: 1px solid var(--sky-200, #BAE6FD);

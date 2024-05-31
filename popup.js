@@ -175,7 +175,7 @@ async function loadTools() {
                     if (!categoryMap[item.category]) {
                         categoryMap[item.category] = []; 
                     }
-                    categoryMap[item.category].push(`<div class="tool-pill"><a href="${item.link}" target="_blank" style="outline: none;">${key}</a><button class="remove-tool" data-tool="${key}" style="outline: none;">
+                    categoryMap[item.category].push(`<div class="tool-pill"><a href="${item.link}" target="_blank" style="outline: none;">${key}</a><button class="remove-tool" data-tool="${key}" style="outline: none; background-color:transparent; border: none;">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12.6668 2.66667H10.3335L9.66683 2H6.3335L5.66683 2.66667H3.3335V4H12.6668M4.00016 12.6667C4.00016 13.0203 4.14064 13.3594 4.39069 13.6095C4.64074 13.8595 4.97987 14 5.3335 14H10.6668C11.0205 14 11.3596 13.8595 11.6096 13.6095C11.8597 13.3594 12.0002 13.0203 12.0002 12.6667V4.66667H4.00016V12.6667Z" fill="#FDA4AF"/>
                     </svg>
