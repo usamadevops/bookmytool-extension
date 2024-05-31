@@ -34,6 +34,8 @@ Google Chrome Browser
 # Tutorials and Screenshots
 Adding a Bookmark
 
+https://github.com/usamadevops/bookmytool-extension/assets/62393328/9f6dc4a1-93fc-4a03-9093-d582031a2aa3
+
 Viewing Bookmarks
 
 Exporting Bookmarks
